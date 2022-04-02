@@ -28,5 +28,8 @@ def get_shares(ticker: str):
     else:
         data = yf.download(ticker, start_date, date.today().strftime("%Y-%m-%d"))
         data.to_csv(name)
+        data.drop(columns=['Adj Close', 'Volume'], inplace=True)
+        data['Date'] = data.index
+        data.reset_index(drop=True, inplace=True)
 
     return data

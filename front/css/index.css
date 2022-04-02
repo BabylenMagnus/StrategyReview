@@ -1,0 +1,132 @@
+body{
+  display: grid;
+  grid-template-rows: 60px 90px auto 280px;
+	overflow-x: hidden;
+  margin:0;
+  padding:0;
+}
+
+.TopHeader{
+background-color: #404563;
+padding-left: 15%;
+padding-right: 15%;
+display:flex;
+color:white;
+align-items: center;
+}
+
+.TopHeader_Menu{
+  font-family: 'Rubik',sans-serif;
+  font-size: 40px;
+  padding-left: 10px;
+  cursor:pointer;
+  color:white;
+  text-decoration:none;
+}
+
+.TopHeader_Menu:hover{
+  text-decoration:underline;
+}
+
+.BottomHeader{
+padding-left: 10%;
+padding-right: 10%;
+border-bottom: 1px solid #d9dbe6;
+display: flex;
+flex-direction: column;
+justify-content: flex-end;
+}
+
+
+.button {
+    display: inline-block ;
+    text-decoration: none ;
+    background-color: #15a4fa;
+    color: #ffffff ;
+    border: 0px solid #006089 ;
+    border-radius: 8px ;
+    font-size: 25px ;
+    padding: 4px 41px ;
+    transition: all 0.8s ease;
+    cursor: pointer;
+}
+.button:hover{
+    text-decoration: none ;
+    background-color: #006089;
+    color: #ffeded ;
+    border-color: #006089 ;
+}
+
+.Content{
+
+  display: grid;
+  grid-template-rows: auto auto;
+}
+
+.Content_Maindescription{
+  padding-left: 10%;
+  padding-right: 10%;
+  background-image: url(../img/ContentFon.png) ;
+  webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  height: 783px;
+  clip-path: polygon(0 0, 100% 0, 100% 80%, 0 100%);
+
+}
+
+.Content_Maindescription_MainText{
+  font-size: 50px;
+  font-family: 'Rubik',sans-serif;
+  display:flex;
+  justify-content: center;
+  flex-direction: column;
+    align-items: center;
+    text-align: center;
+    color:white;
+    margin-top: 10%;
+}
+
+.Content_Maindescription svg {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 10vw;
+  /* set height to pixels if you want angle to change with screen width */
+}
+
+.Content_description{
+  height: 500px;
+}
+
+.Content_description_MainText{
+    font-size: 50px;
+    padding-top: 40px;
+    font-family: 'Rubik',sans-serif;
+    display: flex;
+    justify-content: center;
+}
+
+.Content_description_textAndimg{
+  display: flex;
+}
+
+.Content_description_textAndimg_text{
+font-size: 20px;
+font-family: 'Rubik',sans-serif;
+}
+
+.Content_description_textAndimg_img{
+
+}
+
+.Content_box{
+  height: 600px;
+}
+
+
+.Footer{
+background-color:#404563;
+
+}

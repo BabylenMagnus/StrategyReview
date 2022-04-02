@@ -6,17 +6,17 @@ from typing import Callable
 
 
 class Strategy:
-    history: str
+    history: list
     decision: Callable
 
-    def __init__(self, ticket: str, start_date: date, balance=10000):
+    def __init__(self, ticket: str, start_date: date, end_date: date):
         self.data = get_shares(ticket)
-        assert len(self.data) == 0, "Wrong ticket"
-        self.start_date = max(self.data.index.min().date(), start_date)
-        self.start_point = self.data[pd.to_datetime(self.data['Date']) >= np.datetime64(start_date)].index[0]
-        self.data = np.array(self.data)[self.start_point]
+        assert not self.data is None, "Wrong ticket"
 
-        self.balance = balance
+        start_date = max(self.data.index.min().date(), start_date)
+        start_point = self.data[pd.to_datetime(self.data['Date']) >= np.datetime64(start_date)].index[0]
+        end_point = self.data[pd.to_datetime(self.data['Date']) <= np.datetime64(end_date)].index[-1]
+        self.data = np.array(self.data)[start_point: end_point]
 
         self.ent_point = 0
         self.close_point = 0
@@ -35,7 +35,28 @@ class Strategy:
             self.decision(open, high, low, close)
 
     def buy(self, stock, price):
+        if self.amount == 1:
+            return
+
         self.amount += stock
+
+        if self.amount > 1:
+            stock -= self.amount - 1
+            self.amount = 1
+
+        self.history.append(['Buy', stock, price])
+
+    def sold(self, stock, price):
+        if self.amount == 0:
+            return
+
+        self.amount -= stock
+
+        if self.amount < 0:
+            stock += self.amount
+            self.amount = 0
+
+        self.history.append(['Sold', stock, price])
 
 
 class BaseStrategy(Strategy):

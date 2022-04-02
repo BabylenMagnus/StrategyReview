@@ -1,5 +1,5 @@
 import os.path
-
+import random
 
 import pandas as pd
 import yfinance as yf
@@ -34,3 +34,7 @@ def get_shares(ticker: str):
         data.reset_index(drop=True, inplace=True)
 
     return data
+
+
+def get_random_name(n=7):
+    return str(random.random())[-n:]

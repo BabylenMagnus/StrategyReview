@@ -139,12 +139,28 @@ class BaseStrategy(Strategy):
 
 
 class MeanReversion(Strategy):
-    def __init__(self, ticket: str, start_date: date, end_date: date, sma=200):
+    def __init__(self, ticket: str, start_date: date, end_date: date, n_days_view=12, percent_ind_trend=0.01):
         super().__init__(ticket, start_date, end_date)
-        sma_list = []
 
-        for i in range(self.start_point, self.end_point):
-            sma_list.append(self.data[max(i - sma, 0): i, 3].mean())
+        self.current_point = self.start_point
+        self.n_days_veiw = n_days_view
+        self.percent_ind_trend = percent_ind_trend
 
-        self.sma_list = np.array(sma_list)
-        self.exension = (self.iter_data[:, 3] - self.sma_list) / self.sma_list
+        self.st_stock = .1
+
+    def start(self, open, high, low, close):
+        self.decision(open, high, low, close)
+
+    def decision(self, open, high, low, close):
+        period = self.data[max(self.current_point - self.n_days_veiw, 0): self.current_point, 3]
+        value = close / period[0]
+
+        # trend_up = value > 1 + self.percent_ind_trend
+        # trend_down = value < 1 - self.percent_ind_trend
+
+        if close <= min(period):
+            self.buy(self.st_stock, close)
+        if close >= max(period):
+            self.sold(self.st_stock, close)
+
+        self.current_point += 1

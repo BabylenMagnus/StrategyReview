@@ -24,14 +24,15 @@ def get_shares(ticker: str):
         return
     name = os.path.join("temp", f"{ticker}.csv")
 
-    if name in os.listdir('temp'):
+    if os.path.isfile(name):
         data = pd.read_csv(name)
     else:
         data = yf.download(ticker, start_date, date.today().strftime("%Y-%m-%d"))
-        data.to_csv(name)
         data.drop(columns=['Adj Close', 'Volume'], inplace=True)
         data['Date'] = data.index
         data.reset_index(drop=True, inplace=True)
+        data.to_csv(name, index=False)
+        data = pd.read_csv(name)
 
     return data
 

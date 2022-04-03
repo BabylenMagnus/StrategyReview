@@ -13,5 +13,5 @@ class Saves:
 
 
 STRATEGY_DICT = {
-    'base': BaseStrategy
+    'Base': BaseStrategy
 }

@@ -3,8 +3,8 @@ import random
 
 import pandas as pd
 import yfinance as yf
-from datetime import date
-
+from datetime import date, datetime
+import numpy as np
 
 figi = pd.read_excel('figi ticker.xlsx')
 tickers = list(figi['ticker'])
@@ -37,5 +37,20 @@ def get_shares(ticker: str):
     return data
 
 
+def get_close_series(ticket, start_date, end_date):
+    data = get_shares(ticket)
+    assert not data is None, "Wrong ticket"
+
+    start_date = max(datetime.strptime(data['Date'][0], '%Y-%m-%d'), start_date)
+    start_point = data[pd.to_datetime(data['Date']) >= np.datetime64(start_date)].index[0]
+    end_point = data[pd.to_datetime(data['Date']) <= np.datetime64(end_date)].index[-1]
+    data = np.array(data)
+    iter_data = data[start_point: end_point, 3]
+    return iter_data
+
+
 def get_random_name(n=7):
     return str(random.random())[-n:]
+
+
+str2date = lambda n: datetime.strptime(n, "%d.%m.%Y")

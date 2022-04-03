@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect
 from config import Pages, Saves, STRATEGY_DICT
+from utils import str2date
 
 app = Flask(__name__)
 
@@ -27,16 +28,22 @@ def indexh():
         print('Ебать')
         req = request.form
         print(req)
-        # strategy = req['strategy']
-        # req.pop('strategy')
-        # params = list(req.values())
-        #
-        # exec_strategy = STRATEGY_DICT[strategy](*params)
-        # exec_strategy.simulation()
-        # out = exec_strategy.history
+        strategy = req['hidden']
+        params = dict(req)
+        start_money = params['start_money_count']
+        ticket = params['ticket']
+        params.pop('start_money_count')
+        params.pop('hidden')
+        params['start_date'] = str2date(params['start_date'])
+        params['end_date'] = str2date(params['end_date'])
+
+        exec_strategy = STRATEGY_DICT[strategy](**params)
+        exec_strategy.simulation()
+        out = exec_strategy.history
         return redirect('/redir')
     else:
         return render_template('index.html')
+
 #
 # @app.route('/')
 # def index():

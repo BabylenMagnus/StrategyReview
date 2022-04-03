@@ -14,24 +14,24 @@
 <!--====================================================================================================================-->
   <div class="Content">
     <div class="ContentTool">
-      <p>Инструмент: AAPL</p>
+      <p>Инструмент: {{ticket}}</p>
     </div>
     <div class="ContentUnits">
-      <p>1000 едениц;</p>
-      <p>Вы выиграли -100 USD;</p>
+      <p>{{value}} единиц</p>
+      <p>Профит: {{profit}} USD</p>
     </div>
     <div class="ContentValue">
-      <p>Итоговая величина портфеля: 1000 AAPL;</p>
+      <p>Итоговая величина портфеля: {{total_brief_sum}} {{ticket}};</p>
     </div>
     <div class="ContentIncurrency">
-      <p>В валюте - 10000 USD</p>
+      <p>В валюте - {{total_currency_sum}} USD</p>
     </div>
     <div class="ContentСhart">
-    <div class="ContentСhart_graf">
-      <img src="static/img/no_photo.png" alt="" width="600px" height="480px">
+    <div class="ContentСhartGraf">
+      <img src="{{alg_plot_path}}" alt="" width="600px" height="480px">
     </div>
-    <div class="ContentСhart_graf">
-      <img src="static/img/no_photo.png" alt="" width="600px" height="480px">
+    <div class="ContentСhartGraf">
+      <img src="{{brief_plot_path}}" alt="" width="600px" height="480px">
     </div>
     </div>
 

@@ -30,20 +30,36 @@ def indexh():
         print(req)
         strategy = req['hidden']
         params = dict(req)
+        start_money = int(params['start_money_count'])
         params.pop('start_money_count')
         params.pop('hidden')
         params['start_date'] = str2date(params['start_date'])
         params['end_date'] = str2date(params['end_date'])
 
         redir_data = {}
-        start_money = params['start_money_count']
         ticket = params['ticket']
         redir_data['start_money_count'] = start_money
         redir_data['ticket'] = ticket
 
+        for k in params.keys():
+            if k == 'ticket':
+                continue
+            if type(params[k]) is str:
+                params[k] = float(params[k])
+
         exec_strategy = STRATEGY_DICT[strategy](**params)
-        exec_strategy.simulation()
-        out = exec_strategy.history
+        history, amount, close = exec_strategy.simulation()
+        print(history)
+
+        total_money = round(exec_strategy.count_bills(int(start_money)))
+        profit = round(total_money - start_money)
+        print(amount)
+        value = (total_money / close) * amount  # это количество акций, номинально
+        redir_data['total_money'] = total_money
+        redir_data['profit'] = profit
+        redir_data['value'] = value
+        session['redir_data'] = redir_data
+
         return redirect('/redir')
     else:
         return render_template('index.html')
@@ -57,7 +73,10 @@ def indexh():
 @app.route('/redir')
 def redir():
     stock_img_path = 'static/img/ContentFon.png'
-    return render_template(Pages.redir,)
+    if 'redir_data' in session:
+        return render_template(Pages.redir, **session['redir_data'])
 
 
+app.secret_key = 'Hello World'
+app.config['SESSION_TYPE'] = 'filesystem'
 app.run(debug=True)

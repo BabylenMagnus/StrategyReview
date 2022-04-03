@@ -115,7 +115,7 @@ class BaseStrategy(Strategy):
 
     def start(self, open, high, low, close):
         self.past = close
-        value = abs(open - close) / 2
+        value = (open + close) / 2
 
         self.buy(1, value)
 
@@ -131,7 +131,7 @@ class BaseStrategy(Strategy):
             self.sold(self.st_stock, close)
             self.next_day_sold = False
 
-        value = abs(open - close) / 2
+        value = (open + close) / 2
 
         if self.past >= value:
             self.value_down_days += 1

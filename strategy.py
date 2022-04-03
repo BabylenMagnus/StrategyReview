@@ -55,6 +55,25 @@ class Strategy:
 
         self.history.append(['Buy', self.current_date, stock, price])
 
+    def count_bills(self, start_bills):
+        bills = start_bills
+        num_shares = 0
+        value_in_shares = 0
+        num_buy = 0
+        for action, operation_date, stonks, price in self.history:
+            if action == "Buy":
+                transaction = bills * stonks
+                bills -= transaction
+                num_shares += transaction / price
+                num_buy += 1
+            else:
+                value_in_shares = num_shares * price
+                transaction = value_in_shares / num_buy
+                bills += transaction
+                value_in_shares -= transaction
+
+        return bills
+
     def sold(self, stock, price):
         if self.amount == 0:
             return

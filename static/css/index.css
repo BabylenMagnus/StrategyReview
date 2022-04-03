@@ -183,12 +183,12 @@ cursor: pointer;
   background-color: white;
   display: none;
   font-family: 'Rubik',sans-serif;
-  display: none;
+
 }
-#ContentBlocksInfoClose{
+.ContentBlocksInfoClose{
 float:right; padding-right:10px; font-size:25px;
 }
-#ContentBlocksInfoClose:hover{
+.ContentBlocksInfoClose:hover{
 opacity: 0.6;
 cursor: pointer;
 }
@@ -217,6 +217,39 @@ cursor: pointer;
     color: #ffeded ;
     border-color: #006089 ;
 }
+
+.ContentBlocksSetting{
+  width: 700px;
+  height: 530px;
+  box-shadow: 0 0 10px 5px rgba(221, 221, 221, 1);
+  position: absolute;
+  z-index: 100;
+  background-color: white;
+  display: none;
+  font-family: 'Rubik',sans-serif;
+  display:none;
+}
+
+.ContentBlocksSettingForm{
+  display: flex;
+  align-items: center;
+    justify-content: center;
+    font-family: 'Rubik',sans-serif;
+    font-size: 18px ;
+    flex-direction: column;
+
+}
+
+.slider1{
+  margin: 10px;
+width: 80%;
+}
+.slider2{
+  margin: 10px;
+width: 70%;
+}
+
+
 
 .Content_box{
   height: 600px;

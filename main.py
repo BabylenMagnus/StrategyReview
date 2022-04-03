@@ -4,21 +4,43 @@ from config import Pages, Saves, STRATEGY_DICT
 app = Flask(__name__)
 
 
-@app.route('/', methods=["POST"])
-def use_form():
-    req = request.form
-    strategy = req['strategy']
-    req.pop('strategy')
-    params = list(req.values())
-
-    exec_strategy = STRATEGY_DICT[strategy](*params)
-    exec_strategy.simulation()
-    out = exec_strategy.history
-
-
-@app.route('/')
+@app.route('/', methods=('GET', 'POST'))
 def index():
-    return render_template('index.html')
+    if request.method == 'POST':
+        print('Ебать')
+        req = request.form
+        strategy = req['strategy']
+        req.pop('strategy')
+        params = list(req.values())
+
+        exec_strategy = STRATEGY_DICT[strategy](*params)
+        exec_strategy.simulation()
+        out = exec_strategy.history
+        return redirect('/redir')
+    else:
+        return render_template('index.html')
+
+
+@app.route('/index.html', methods=('GET', 'POST'))
+def indexh():
+    if request.method == 'POST':
+        print('Ебать')
+        req = request.form
+        print(req)
+        # strategy = req['strategy']
+        # req.pop('strategy')
+        # params = list(req.values())
+        #
+        # exec_strategy = STRATEGY_DICT[strategy](*params)
+        # exec_strategy.simulation()
+        # out = exec_strategy.history
+        return redirect('/redir')
+    else:
+        return render_template('index.html')
+#
+# @app.route('/')
+# def index():
+#     return render_template('index.html')
 
 
 @app.route('/redir')

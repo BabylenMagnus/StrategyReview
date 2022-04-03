@@ -1,5 +1,6 @@
 from utils import get_shares
 from datetime import date
+from datetime import datetime, time
 import pandas as pd
 import numpy as np
 from typing import Callable
@@ -8,13 +9,15 @@ from typing import Callable
 class Strategy:
     history: list
     decision: Callable
+    start: Callable
     current_date: date
 
     def __init__(self, ticket: str, start_date: date, end_date: date):
+        start_date = datetime.combine(start_date, time(0, 0))
         self.data = get_shares(ticket)
         assert not self.data is None, "Wrong ticket"
 
-        start_date = max(self.data.index.min().date(), start_date)
+        start_date = max(datetime.strptime(self.data['Date'][0], '%Y-%m-%d'), start_date)
         start_point = self.data[pd.to_datetime(self.data['Date']) >= np.datetime64(start_date)].index[0]
         end_point = self.data[pd.to_datetime(self.data['Date']) <= np.datetime64(end_date)].index[-1]
         self.data = np.array(self.data)[start_point: end_point]
@@ -29,10 +32,13 @@ class Strategy:
         open, high, low, close, current_date = self.data[0]
         self.current_date = current_date
         self.ent_point = high
-
+        self.start(open, high, low, close)
+        
         for open, high, low, close, current_date in self.data[1:]:
             self.current_date = current_date
             self.decision(open, high, low, close)
+
+        return self.history
 
     def buy(self, stock: float, price: float):
         if self.amount == 1:
@@ -65,13 +71,14 @@ class BaseStrategy(Strategy):
             self, ticket: str, start_date: date, end_date: date, exit_value=0.1, day_ruin=0.02, days2out=12,
             buy_past_days_down=2, close_past_days=3
     ):
-        super(Strategy).__init__(ticket, start_date, end_date)
+        super().__init__(ticket, start_date, end_date)
         self.st_stock = .1
-        self.amount = .5
+        self.amount = 0
 
         self.value_down_days = 0
         self.close_up_days = 0
 
+        self.past = 0
         self.past = 0
 
         self.next_day_sold = False
@@ -83,6 +90,12 @@ class BaseStrategy(Strategy):
         self.days2out = days2out
         self.buy_past_days_down = buy_past_days_down
         self.close_past_days = close_past_days
+
+    def start(self, open, high, low, close):
+        self.past = close
+        value = abs(open - close) / 2
+
+        self.buy(1, value)
 
     def decision(self, open, high, low, close):
 
@@ -96,7 +109,7 @@ class BaseStrategy(Strategy):
             self.sold(self.st_stock, close)
             self.next_day_sold = False
 
-        value = abs(open - close) // 2
+        value = abs(open - close) / 2
 
         if self.past >= value:
             self.value_down_days += 1

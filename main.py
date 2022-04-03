@@ -1,6 +1,5 @@
 from flask import Flask, render_template, request, redirect
-from config import Pages, Saves
-
+from config import Pages, Saves, STRATEGY_DICT
 
 app = Flask(__name__)
 
@@ -12,6 +11,9 @@ def use_form():
     req.pop('strategy')
     params = list(req.values())
 
+    exec_strategy = STRATEGY_DICT[strategy](*params)
+    exec_strategy.simulation()
+    out = exec_strategy.history
 
 
 @app.route('/')

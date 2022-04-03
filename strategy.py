@@ -122,6 +122,3 @@ class BaseStrategy(Strategy):
             self.day_in_row = 0
 
 
-strategy_key = {
-    'base': BaseStrategy
-}

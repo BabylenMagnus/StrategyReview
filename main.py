@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect, session
 from config import Pages, Saves, STRATEGY_DICT
 from utils import str2date
 
@@ -30,12 +30,16 @@ def indexh():
         print(req)
         strategy = req['hidden']
         params = dict(req)
-        start_money = params['start_money_count']
-        ticket = params['ticket']
         params.pop('start_money_count')
         params.pop('hidden')
         params['start_date'] = str2date(params['start_date'])
         params['end_date'] = str2date(params['end_date'])
+
+        redir_data = {}
+        start_money = params['start_money_count']
+        ticket = params['ticket']
+        redir_data['start_money_count'] = start_money
+        redir_data['ticket'] = ticket
 
         exec_strategy = STRATEGY_DICT[strategy](**params)
         exec_strategy.simulation()

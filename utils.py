@@ -53,4 +53,4 @@ def get_random_name(n=7):
     return str(random.random())[-n:]
 
 
-str2date = lambda n: datetime.strptime(n, "%d.%m.%Y")
+str2date = lambda n: datetime.strptime(n, "%Y-%m-%d")

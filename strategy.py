@@ -133,3 +133,5 @@ class BaseStrategy(Strategy):
             self.day_in_row += 1
         else:
             self.day_in_row = 0
+
+

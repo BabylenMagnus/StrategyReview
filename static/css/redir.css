@@ -1,0 +1,82 @@
+body {
+  display: grid;
+  grid-template-rows: 60px auto 280px;
+	overflow-x: hidden;
+  margin:0;
+  padding:0;
+}
+
+.Header{
+background-color: #404563;
+padding-left: 15%;
+padding-right: 15%;
+color:white;
+align-items: center;
+display:flex;
+}
+
+.Header a{
+  font-family: 'Rubik',sans-serif;
+  font-size: 40px;
+  padding-left: 10px;
+
+  color:white;
+  text-decoration:none;
+}
+
+.Content{
+font-family: 'Rubik',sans-serif;
+}
+
+.ContentTool{
+  padding-left: 10%;
+  padding-right: 10%;
+  font-size: 40px;
+  border-bottom: 2px solid #7a7a7a;
+}
+
+.ContentUnits{
+  padding-left: 10%;
+  padding-right: 10%;
+  font-size: 30px;
+    border-bottom: 2px solid #7a7a7a;
+    display: flex;
+
+}
+
+.ContentUnits p{
+margin-right: 40px;
+}
+
+.ContentValue{
+  padding-left: 10%;
+  padding-right: 10%;
+  border-bottom: 2px solid #7a7a7a;
+  display: flex;
+    font-size: 30px;
+}
+
+.ContentIncurrency{
+  padding-left: 10%;
+  padding-right: 10%;
+  border-bottom: 2px solid #7a7a7a;
+  font-size: 30px;
+}
+
+.ContentСhart{
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+
+}
+
+.ContentСhart_graf{
+width: 600px;
+height: 400px;
+border: 3px solid #7a7a7a;
+margin: 20px;
+}
+
+.Footer{
+  background-color:#404563;
+}

@@ -1,4 +1,5 @@
 import os.path
+import random
 
 import pandas as pd
 import yfinance as yf
@@ -34,3 +35,7 @@ def get_shares(ticker: str):
         data = pd.read_csv(name)
 
     return data
+
+
+def get_random_name(n=7):
+    return str(random.random())[-n:]

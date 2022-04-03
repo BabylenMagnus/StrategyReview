@@ -18,9 +18,10 @@ class Strategy:
         assert not self.data is None, "Wrong ticket"
 
         start_date = max(datetime.strptime(self.data['Date'][0], '%Y-%m-%d'), start_date)
-        start_point = self.data[pd.to_datetime(self.data['Date']) >= np.datetime64(start_date)].index[0]
-        end_point = self.data[pd.to_datetime(self.data['Date']) <= np.datetime64(end_date)].index[-1]
-        self.data = np.array(self.data)[start_point: end_point]
+        self.start_point = self.data[pd.to_datetime(self.data['Date']) >= np.datetime64(start_date)].index[0]
+        self.end_point = self.data[pd.to_datetime(self.data['Date']) <= np.datetime64(end_date)].index[-1]
+        self.data = np.array(self.data)
+        self.iter_data = self.data[self.start_point: self.end_point]
 
         self.ent_point = 0
         self.close_point = 0
@@ -29,16 +30,18 @@ class Strategy:
         self.history = []
 
     def simulation(self):
-        open, high, low, close, current_date = self.data[0]
+        open, high, low, close, current_date = self.iter_data[0]
         self.current_date = current_date
         self.ent_point = high
         self.start(open, high, low, close)
         
-        for open, high, low, close, current_date in self.data[1:]:
+        for open, high, low, close, current_date in self.iter_data[1:-1]:
             self.current_date = current_date
             self.decision(open, high, low, close)
 
-        return self.history
+        open, high, low, close, current_date = self.iter_data[-1]
+
+        return self.history, self.amount, close
 
     def buy(self, stock: float, price: float):
         if self.amount == 1:
@@ -135,3 +138,13 @@ class BaseStrategy(Strategy):
             self.day_in_row = 0
 
 
+class MeanReversion(Strategy):
+    def __init__(self, ticket: str, start_date: date, end_date: date, sma=200):
+        super().__init__(ticket, start_date, end_date)
+        sma_list = []
+
+        for i in range(self.start_point, self.end_point):
+            sma_list.append(self.data[max(i - sma, 0): i, 3].mean())
+
+        self.sma_list = np.array(sma_list)
+        self.exension = (self.iter_data[:, 3] - self.sma_list) / self.sma_list

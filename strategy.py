@@ -65,7 +65,7 @@ class BaseStrategy(Strategy):
             self, ticket: str, start_date: date, end_date: date, exit_value=0.1, day_ruin=0.02, days2out=12,
             buy_past_days_down=2, close_past_days=3
     ):
-        super(Strategy).__init__(ticket, start_date, end_date)
+        super().__init__(ticket, start_date, end_date)
         self.st_stock = .1
         self.amount = .5
 
@@ -120,3 +120,8 @@ class BaseStrategy(Strategy):
             self.day_in_row += 1
         else:
             self.day_in_row = 0
+
+
+strategy_key = {
+    'base': BaseStrategy
+}

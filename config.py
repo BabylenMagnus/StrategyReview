@@ -1,9 +1,10 @@
 class Pages:
-    index = 'front/index.html'
+    index = 'index.html'
+    redir = 'redir.html'
 
 
 class Saves:
-    stock_plot = 'front/img/stocks'
-    brief_plot = 'front/img/brief'
-    alg_plot = 'front/img/alg'
+    stock_plot = 'static/img/stocks'
+    brief_plot = 'static/img/briefs'
+    alg_plot = 'static/img/alg'
 

@@ -1,0 +1,229 @@
+body{
+  display: grid;
+  grid-template-rows: 60px 90px auto 280px;
+	overflow-x: hidden;
+  margin:0;
+  padding:0;
+}
+
+.TopHeader{
+background-color: #404563;
+padding-left: 15%;
+padding-right: 15%;
+display:flex;
+color:white;
+align-items: center;
+}
+
+.TopHeaderMenu{
+  font-family: 'Rubik',sans-serif;
+  font-size: 40px;
+  padding-left: 10px;
+  cursor:pointer;
+  color:white;
+  text-decoration:none;
+}
+
+.TopHeaderMenu:hover{
+  text-decoration:underline;
+}
+
+.BottomHeader{
+padding-left: 10%;
+padding-right: 10%;
+border-bottom: 1px solid #d9dbe6;
+display: flex;
+flex-direction: column;
+justify-content: flex-end;
+}
+
+
+.button {
+    display: inline-block ;
+    text-decoration: none ;
+    background-color: #15a4fa;
+    color: #ffffff ;
+    border: 0px solid #006089 ;
+    border-radius: 8px ;
+    font-size: 25px ;
+    padding: 4px 41px ;
+    transition: all 0.8s ease;
+    cursor: pointer;
+}
+.button:hover{
+    text-decoration: none ;
+    background-color: #006089;
+    color: #ffeded ;
+    border-color: #006089 ;
+}
+
+.Content{
+
+  display: grid;
+  grid-template-rows: auto auto auto;
+}
+
+.ContentMainDescription{
+  padding-left: 10%;
+  padding-right: 10%;
+  background-image: url(../img/ContentFon.png) ;
+  webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  height: 783px;
+  clip-path: polygon(0 0, 100% 0, 100% 80%, 0 100%);
+
+}
+
+.ContentMainDescriptionMainText{
+  font-size: 50px;
+  font-family: 'Rubik',sans-serif;
+  display:flex;
+  justify-content: center;
+  flex-direction: column;
+    align-items: center;
+    text-align: center;
+    color:white;
+    margin-top: 10%;
+}
+
+.ContentMainDescription svg {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 10vw;
+  /* set height to pixels if you want angle to change with screen width */
+}
+
+.ContentDescription{
+  height: 500px;
+}
+
+.ContentDescriptionMainText{
+    font-size: 50px;
+    padding-top: 40px;
+    font-family: 'Rubik',sans-serif;
+    display: flex;
+    justify-content: center;
+}
+
+.ContentDescriptionTextAndimg{
+  display: flex;
+align-items: center;
+justify-content: space-between;
+border-bottom: 3px solid #7a7a7a;
+}
+
+.ContentDescriptiontextAndImgtext{
+font-size: 20px;
+font-family: 'Rubik',sans-serif;
+width: 600px;
+padding-left: 10%;
+padding-right: 10%;
+text-align: center;
+}
+
+.ContentDescriptionTextAndimgImg{
+width: 600px;
+height: 400px;
+}
+
+.ContentBlocks{
+display: flex;
+margin:60px;
+flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.ContentBlocksBlock{
+   position: relative;
+   margin: 20px;
+   border: 2px solid #7a7a7a;
+    box-shadow: 0 0 10px 5px rgba(221, 221, 221, 1);
+}
+
+.ContentBlocksBlock img{
+  height: 300px;
+  width: 300px;
+
+}
+
+.ContentBlocksBlock span{
+  background: #222;
+    color: #fff;
+    border-radius: 2px;
+    position: absolute;
+    right: 0;
+    bottom: 0px;
+    font-size: 18px;
+    padding: 3px 5px;
+    width: 97%;
+    height: 30%;
+    opacity: 0.8;
+    font-size: 20px;
+    font-family: 'Rubik',sans-serif;
+    text-align: center;
+}
+
+.ContentBlocksBlock:hover{
+opacity: 0.8;
+cursor: pointer;
+}
+
+.ContentBlocksInfo{
+  width: 500px;
+  height: 400px;
+  box-shadow: 0 0 10px 5px rgba(221, 221, 221, 1);
+  position: absolute;
+  z-index: 100;
+  background-color: white;
+  display: none;
+  font-family: 'Rubik',sans-serif;
+  display: none;
+}
+#ContentBlocksInfoClose{
+float:right; padding-right:10px; font-size:25px;
+}
+#ContentBlocksInfoClose:hover{
+opacity: 0.6;
+cursor: pointer;
+}
+
+.ContentBlocksInfoText{
+  padding:30px;
+  font-family: 'Rubik',sans-serif;
+  font-size: 16px;
+}
+
+.ContentBlocksInfoButton {
+    display: inline-block ;
+    text-decoration: none ;
+    background-color: #eaeaea ;
+    color: #000000 ;
+    border: 3px solid #006089 ;
+    border-radius: 5px ;
+    font-size: 14px ;
+    padding: 4px 31px ;
+    transition: all 0.6s ease ;
+    cursor: pointer;
+}
+.ContentBlocksInfoButton:hover{
+    text-decoration: none ;
+    background-color: #0e7dff ;
+    color: #ffeded ;
+    border-color: #006089 ;
+}
+
+.Content_box{
+  height: 600px;
+}
+
+
+.Footer{
+background-color:#404563;
+
+}

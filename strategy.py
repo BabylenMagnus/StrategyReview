@@ -55,6 +55,25 @@ class Strategy:
 
         self.history.append(['Buy', self.current_date, stock, price])
 
+    def count_bills(self, start_bills):
+        bills = start_bills
+        num_shares = 0
+        value_in_shares = 0
+        num_buy = 0
+        for action, operation_date, stonks, price in self.history:
+            if action == "Buy":
+                transaction = bills * stonks
+                bills -= transaction
+                num_shares += transaction / price
+                num_buy += 1
+            else:
+                value_in_shares = num_shares * price
+                transaction = value_in_shares / num_buy
+                bills += transaction
+                value_in_shares -= transaction
+
+        return bills
+
     def sold(self, stock, price):
         if self.amount == 0:
             return
@@ -139,12 +158,28 @@ class BaseStrategy(Strategy):
 
 
 class MeanReversion(Strategy):
-    def __init__(self, ticket: str, start_date: date, end_date: date, sma=200):
+    def __init__(self, ticket: str, start_date: date, end_date: date, n_days_view=12, percent_ind_trend=0.01):
         super().__init__(ticket, start_date, end_date)
-        sma_list = []
 
-        for i in range(self.start_point, self.end_point):
-            sma_list.append(self.data[max(i - sma, 0): i, 3].mean())
+        self.current_point = self.start_point
+        self.n_days_veiw = n_days_view
+        self.percent_ind_trend = percent_ind_trend
 
-        self.sma_list = np.array(sma_list)
-        self.exension = (self.iter_data[:, 3] - self.sma_list) / self.sma_list
+        self.st_stock = .1
+
+    def start(self, open, high, low, close):
+        self.decision(open, high, low, close)
+
+    def decision(self, open, high, low, close):
+        period = self.data[max(self.current_point - self.n_days_veiw, 0): self.current_point, 3]
+        value = close / period[0]
+
+        # trend_up = value > 1 + self.percent_ind_trend
+        # trend_down = value < 1 - self.percent_ind_trend
+
+        if close <= min(period):
+            self.buy(self.st_stock, close)
+        if close >= max(period):
+            self.sold(self.st_stock, close)
+
+        self.current_point += 1

@@ -12,9 +12,9 @@ class St(bt.Strategy):
         self.data_close = self.datas[0].close
 
     def log(self, txt, dt=None):
-
+        print(type(self.datas[0]))
         dt = dt or self.datas[0].datetime.time()
-        print(f"{dt.isoformat()}, {txt}")
+        # print(f"{dt.isoformat()}, {txt}")
 
     def next(self):
         if self.crossover > 0:
@@ -28,10 +28,15 @@ class St(bt.Strategy):
 
 data = btfeeds.YahooFinanceCSVData(
     dataname='temp/AAPL 2022_04_02 2022_04_08.csv', timeframe=bt.TimeFrame.Minutes,
-    compression=5, quicknotify=True)
+    compression=5, quicknotify=True
+)
 
 cerebro = bt.Cerebro()
 cerebro.adddata(data)
 cerebro.addstrategy(St)
 cerebro.run()
+for stratlist in cerebro.runstrats:
+    for si, strat in enumerate(stratlist):
+        print(strat.datas)
+
 cerebro.plot(style='candlestick')
